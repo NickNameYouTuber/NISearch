@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>NISearch</title>
+  <link rel="stylesheet" href="../static/index.css">
+</head>
+<style>
+  h1 {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 76px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    margin-top: 200px;
+  }
+  body {
+    background: #2B2B2B;
+  }
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Добавим выравнивание элементов по вертикали */
+  }
+  input {
+    width: 800px;
+    height: 50px;
+    border-radius: 15px;
+    background: #FFF;
+    padding-left: 20px;
+    padding-right: 40px; /* Установим отступ справа, чтобы сделать место для кнопки */
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+  }
+  button[type="submit"] {
+    background-image: url(https://www.freeiconspng.com/uploads/search-icon-png-21.png); /* Путь к картинке находится в папке images */
+    width: 30px; /* Установим желаемую ширину картинки кнопки */
+    height: 30px; /* Установим желаемую высоту картинки кнопки */
+    border: none; /* Уберем границу кнопки */
+    background-color: transparent; /* Уберем фоновый цвет кнопки */
+ /* Запретим повторение картинки */
+    background-size: contain; /* Масштабируем картинку по размеру кнопки */
+    position: relative; /* Позиционируем элемент */
+    right: 50px; /* Смещаем кнопку вправо */
+  }
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2B2B2B;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px;
+    text-align: center;
+  }
+</style>
+<body>
+<h1 th:href="@{../}">NISearch</h1>
+<form th:action="@{/search}" method="get" id="searchForm"> <!-- Use method="get" -->
+  <input type="text" class="search-input" name="query">
+  <button type="submit" class="search-button"></button>
+</form>
+<a id="sitesButton" onclick="switchSearchMode('sites')" class="button" style="
+    margin-top: 10px;
+    position: absolute;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+    margin-left: 325px;
+    text-decoration: none;
+">Поиск</a>
+<a id="imagesButton" onclick="switchSearchMode('images')" class="button" style="
+    margin-top: 10px;
+    position: absolute;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+    margin-left: 401px;
+    text-decoration: none;
+">Картинки</a>
+<div id="indicator" style="
+    margin-top: 32px;
+    position: absolute;
+    background-color: #FFFFFF;
+    height: 4px;
+    border-radius: 2px;
+    width: 56px;
+    margin-left: 322px;
+"></div>
+
+<div class="footer">
+  NISearch V1.0 | Powered by Google Search API
+</div>
+
+<script>
+  function goToHome() {
+    window.location.href = "/";
+  }
+
+  function switchSearchMode(mode) {
+    if (mode === 'sites') {
+
+      document.getElementById('imagesButton').style.color = '#FFF'; // Выбираем белый цвет для неактивной кнопки
+      document.getElementById('searchForm').action = '/search'; // Устанавливаем action для формы поиска сайтов
+      document.getElementById('indicator').style.marginLeft = '322px'; // Перемещаем индикатор под кнопку "Поиск"
+      document.getElementById('indicator').style.width = '56px'; // Перемещаем индикатор под кнопку "Картинки"
+    } else if (mode === 'images') {
+      document.getElementById('sitesButton').style.color = '#FFF'; // Выбираем белый цвет для неактивной кнопки
+
+      document.getElementById('searchForm').action = '/images'; // Устанавливаем action для формы поиска картинок
+      document.getElementById('indicator').style.marginLeft = '398px'; // Перемещаем индикатор под кнопку "Картинки"
+      document.getElementById('indicator').style.width = '83px'; // Перемещаем индикатор под кнопку "Картинки"
+    }
+  }
+</script>
+
+</body>
+</html>

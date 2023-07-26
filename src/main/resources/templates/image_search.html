@@ -1,0 +1,28 @@
+<!-- image_search.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Search</title>
+  <link rel="stylesheet" href="../static/index.css">
+</head>
+<body>
+<div class="search-tab">
+  <div style="margin-top: 10px;margin-bottom: 10px;" class="search-form">
+    <h1 style="margin-top: 22px;margin-right: 50px;margin-left: 50px;">NISearch</h1>
+    <form th:action="@{/images}" method="post">
+      <input type="text" name="query" th:value="${query}" />
+      <button type="submit">Find Images</button>
+    </form>
+  </div>
+</div>
+<ul class="results-list">
+  <li th:each="result : ${results}" class="result-item">
+    <div>
+      <img th:src="${result.imageUrl}" alt="" class="result-image">
+      <p class="result-snippet" th:text="${result.imageAltText}"></p>
+    </div>
+  </li>
+</ul>
+</body>
+</html>

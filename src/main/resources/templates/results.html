@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results</title>
+</head>
+<style>
+  h1 {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  body {
+    background: #2B2B2B;
+  }
+
+  .search-tab {
+    position: fixed; /* Делаем панель поиска фиксированной */
+    top: 0; /* Прикрепляем панель поиска к верху экрана */
+    left: 0; /* Выравниваем панель поиска слева */
+    right: 0; /* Выравниваем панель поиска справа */
+    z-index: 999; /* Устанавливаем z-index для обеспечения правильного отображения поверх остальных элементов */
+    width: 100vw;
+    height: 145px;
+    background: #2B2B2B;
+  }
+
+
+  .results-list {
+    padding-top: 145px;
+    list-style: none;
+    margin: 0;
+    padding-left: 250px;
+    padding-right: 390px;
+  }
+
+  .result-item {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #FFF;
+    border-radius: 15px;
+  }
+
+  .result-title {
+    color: #007BFF;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: -5px;
+    margin-top: 5px;
+    text-decoration: none;
+  }
+
+  .result-link {
+    color: #007BFF;
+    text-decoration: none;
+  }
+
+  .result-snippet {
+    margin-top: -5px;
+    color: #6C757D;
+    font-size: 14px;
+  }
+  .search-form {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-top: 15px; /* Добавим небольшой отступ сверху для элементов поиска */
+    background-color: #2B2B2B; /* Зададим фон для .search-form, чтобы она была видна под панелью поиска */
+  }
+  input {
+    width: 800px;
+    height: 40px;
+    border-radius: 15px;
+    background: #FFF;
+    padding-left: 20px;
+    padding-right: 40px; /* Установим отступ справа, чтобы сделать место для кнопки */
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+  }
+  button[type="submit"] {
+    background-image: url(https://www.freeiconspng.com/uploads/search-icon-png-21.png); /* Путь к картинке находится в папке images */
+    width: 20px; /* Установим желаемую ширину картинки кнопки */
+    height: 20px; /* Установим желаемую высоту картинки кнопки */
+    border: none; /* Уберем границу кнопки */
+    background-color: transparent; /* Уберем фоновый цвет кнопки */
+    /* Запретим повторение картинки */
+    background-size: contain; /* Масштабируем картинку по размеру кнопки */
+    position: relative; /* Позиционируем элемент */
+    right: 40px; /* Смещаем кнопку вправо */
+  }
+  .footer {
+    bottom: 0;
+    left: 0;
+    width: auto; /* Замените значение "width" на "auto" */
+    background-color: #2B2B2B;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px;
+    text-align: center;
+  }
+</style>
+<body>
+
+
+<div class="search-tab">
+<div style="margin-top: 10px; margin-bottom: 10px;" class="search-form">
+  <h1 style="margin-top: 22px; margin-right: 50px; margin-left: 50px; cursor: pointer;" onclick="goToHome()">NISearch</h1>
+
+  <script>
+    function goToHome() {
+      window.location.href = "/";
+    }
+  </script>
+
+  <form th:action="@{/search}" method="get">
+    <!-- Display the query in the search input field -->
+    <input type="text" class="search-input" name="query" th:value="${query}">
+    <button type="submit" class="search-button"></button>
+  </form>
+</div>
+  <a th:href="@{/search(query=${query})}" class="button" style="
+    margin-top: -20px;
+    position: absolute;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+    margin-left: 270px;
+    text-decoration: none;
+">Поиск</a>
+  <a th:href="@{/images(query=${query})}" class="button" style="
+    margin-top: -20px;
+    position: absolute;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+    margin-left: 350px;
+    text-decoration: none;
+">Картинки</a>
+  <div style="
+    margin-top: 2px;
+    position: absolute;
+    background-color: #FFFFFF;
+    height: 4px;
+    border-radius: 2px;
+    width: 55px;
+    margin-left: 267px;
+"></div>
+</div>
+<ul class="results-list">
+  <li th:each="result : ${results}" class="result-item">
+    <div>
+      <p style="margin-top: 5px;">
+        <a class="result-title" th:href="${result.link}" th:text="${result.title}"></a>
+      </p>
+      <p style="margin-top: -10px;">
+        <a class="result-link" th:href="${result.link}" th:text="${result.link}"></a>
+      </p>
+      <p class="result-snippet" style="margin-top: 10px;" th:text="${result.snippet}"></p>
+    </div>
+  </li>
+</ul>
+
+<div class="footer">
+  NISearch V1.0 | Powered by Google Search API
+</div>
+
+
+
+</body>
+</html>
