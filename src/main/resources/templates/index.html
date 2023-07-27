@@ -92,6 +92,19 @@
     margin-left: 401px;
     text-decoration: none;
 ">Картинки</a>
+<a id="videosButton" onclick="switchSearchMode('videos')" class="button" style="
+    margin-top: 10px;
+    position: absolute;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+    margin-left: 501px;
+    text-decoration: none;
+">Видео</a>
 <div id="indicator" style="
     margin-top: 32px;
     position: absolute;
@@ -103,7 +116,7 @@
 "></div>
 
 <div class="footer">
-  NISearch V1.0 | Powered by Google Search API
+  NISearch V1.1 | Powered by Google Search API
 </div>
 
 <script>
@@ -124,6 +137,12 @@
       document.getElementById('searchForm').action = '/images'; // Устанавливаем action для формы поиска картинок
       document.getElementById('indicator').style.marginLeft = '398px'; // Перемещаем индикатор под кнопку "Картинки"
       document.getElementById('indicator').style.width = '83px'; // Перемещаем индикатор под кнопку "Картинки"
+    } else if (mode === 'videos') {
+      document.getElementById('sitesButton').style.color = '#FFF'; // Выбираем белый цвет для неактивной кнопки
+
+      document.getElementById('searchForm').action = '/videos'; // Устанавливаем action для формы поиска картинок
+      document.getElementById('indicator').style.marginLeft = '498px'; // Перемещаем индикатор под кнопку "Картинки"
+      document.getElementById('indicator').style.width = '56px'; // Перемещаем индикатор под кнопку "Картинки"
     }
   }
 </script>

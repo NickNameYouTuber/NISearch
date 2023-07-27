@@ -2,24 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Search Results</title>
+  <title>Video Search Results</title>
 </head>
-<style>
-  h1 {
-    color: #FFF;
-    font-family: Inter;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    text-align: center;
-    margin-top: 30px;
-  }
 
+<style>
   body {
     background: #2B2B2B;
   }
-
   .search-tab {
     position: fixed; /* Делаем панель поиска фиксированной */
     top: 0; /* Прикрепляем панель поиска к верху экрана */
@@ -29,42 +18,6 @@
     width: 100vw;
     height: 145px;
     background: #2B2B2B;
-  }
-
-
-  .results-list {
-    padding-top: 145px;
-    list-style: none;
-    margin: 0;
-    padding-left: 250px;
-    padding-right: 390px;
-  }
-
-  .result-item {
-    margin-bottom: 30px;
-    padding: 15px;
-    background: #FFF;
-    border-radius: 15px;
-  }
-
-  .result-title {
-    color: #007BFF;
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: -5px;
-    margin-top: 5px;
-    text-decoration: none;
-  }
-
-  .result-link {
-    color: #007BFF;
-    text-decoration: none;
-  }
-
-  .result-snippet {
-    margin-top: -5px;
-    color: #6C757D;
-    font-size: 14px;
   }
   .search-form {
     display: flex;
@@ -95,6 +48,51 @@
     position: relative; /* Позиционируем элемент */
     right: 40px; /* Смещаем кнопку вправо */
   }
+  h1 {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .footer {
+    bottom: 0;
+    left: 0;
+    width: auto; /* Замените значение "width" на "auto" */
+    background-color: #2B2B2B;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .result-item {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #FFF;
+    border-radius: 15px;
+  }
+
+  .result-title {
+    color: #007BFF;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: -5px;
+    margin-top: 5px;
+    text-decoration: none;
+  }
+  .results-list {
+    padding-top: 145px;
+    list-style: none;
+    margin: 0;
+    padding-left: 250px;
+    padding-right: 390px;
+  }
   .footer {
     bottom: 0;
     left: 0;
@@ -108,25 +106,23 @@
     text-align: center;
   }
 </style>
+
 <body>
-
-
 <div class="search-tab">
-<div style="margin-top: 10px; margin-bottom: 10px;" class="search-form">
-  <h1 style="margin-top: 22px; margin-right: 50px; margin-left: 50px; cursor: pointer;" onclick="goToHome()">NISearch</h1>
+  <div style="margin-top: 10px; margin-bottom: 10px;" class="search-form">
+    <h1 style="margin-top: 22px; margin-right: 50px; margin-left: 50px; cursor: pointer;" onclick="goToHome()">NISearch</h1>
 
-  <script>
-    function goToHome() {
-      window.location.href = "/";
-    }
-  </script>
-
-  <form th:action="@{/search}" method="get">
-    <!-- Display the query in the search input field -->
-    <input type="text" class="search-input" name="query" th:value="${query}">
-    <button type="submit" class="search-button"></button>
-  </form>
-</div>
+    <script>
+      function goToHome() {
+        window.location.href = "/";
+      }
+    </script>
+    <form th:action="@{/videos}" method="get">
+      <!-- Display the query in the search input field -->
+      <input type="text" name="query" th:value="${query}" />
+      <button type="submit" class="search-button"></button>
+    </form>
+  </div>
   <a th:href="@{/search(query=${query})}" class="button" style="
     margin-top: -20px;
     position: absolute;
@@ -173,28 +169,30 @@
     height: 4px;
     border-radius: 2px;
     width: 55px;
-    margin-left: 267px;
+    margin-left: 450px;
 "></div>
 </div>
 <ul class="results-list">
   <li th:each="result : ${results}" class="result-item">
-    <div>
-      <p style="margin-top: 5px;">
-        <a class="result-title" th:href="${result.link}" th:text="${result.title}"></a>
-      </p>
-      <p style="margin-top: -10px;">
-        <a class="result-link" th:href="${result.link}" th:text="${result.link}"></a>
-      </p>
-      <p class="result-snippet" style="margin-top: 10px;" th:text="${result.snippet}"></p>
+    <div style="display: flex">
+      <a class="thumbnail-link" th:href="${result.videoUrl}">
+        <img class="thumbnail" th:src="${result.thumbnailUrl}" alt="Video Thumbnail">
+      </a>
+      <div style="margin-left: 20px">
+        <p style="margin-top: 5px;">
+          <a class="result-title" th:href="${result.videoUrl}" th:text="${result.title}"></a>
+        </p>
+        <p style="margin-top: -10px;">
+          <span class="channel-title" th:text="${result.channelTitle}"></span> •
+          <span class="published-at" th:text="${result.publishedAt}"></span>
+        </p>
+        <p class="result-snippet" style="margin-top: 10px;" th:text="${result.description}"></p>
+      </div>
     </div>
   </li>
 </ul>
-
 <div class="footer">
   NISearch V1.1 | Powered by Google Search API
 </div>
-
-
-
 </body>
 </html>
