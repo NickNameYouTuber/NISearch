@@ -105,6 +105,26 @@
     padding: 8px;
     text-align: center;
   }
+  .thumbnail {
+    border-radius: 15px;
+  }
+  .channel-title {
+    color: #91b1d4;
+    font-size: 14px;
+  }
+  .published-at {
+    color: #91b1d4;
+    font-size: 14px;
+  }
+  .result-snippet {
+    color: #6C757D;
+  }
+  p {
+    font-family: Inter;
+  }
+  a {
+    font-family: Inter;
+  }
 </style>
 
 <body>
@@ -176,7 +196,7 @@
   <li th:each="result : ${results}" class="result-item">
     <div style="display: flex">
       <a class="thumbnail-link" th:href="${result.videoUrl}">
-        <img class="thumbnail" th:src="${result.thumbnailUrl}" alt="Video Thumbnail">
+        <img width="150px" class="thumbnail" th:src="${result.thumbnailUrl}" alt="Video Thumbnail">
       </a>
       <div style="margin-left: 20px">
         <p style="margin-top: 5px;">

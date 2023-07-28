@@ -52,19 +52,21 @@
     font-size: 20px;
     font-weight: 600;
     margin-bottom: -5px;
-    margin-top: 5px;
+    margin-top: 4px;
     text-decoration: none;
   }
 
   .result-link {
-    color: #007BFF;
+    color: #91b1d4;
     text-decoration: none;
+    font-size: 14px;
   }
 
   .result-snippet {
     margin-top: -5px;
     color: #6C757D;
     font-size: 14px;
+    font-weight: 550;
   }
   .search-form {
     display: flex;
@@ -106,6 +108,12 @@
     font-weight: 600;
     padding: 8px;
     text-align: center;
+  }
+  a {
+    font-family: Inter;
+  }
+  p {
+    font-family: Inter;
   }
 </style>
 <body>
@@ -182,7 +190,7 @@
       <p style="margin-top: 5px;">
         <a class="result-title" th:href="${result.link}" th:text="${result.title}"></a>
       </p>
-      <p style="margin-top: -10px;">
+      <p style="margin-top: -14px;">
         <a class="result-link" th:href="${result.link}" th:text="${result.link}"></a>
       </p>
       <p class="result-snippet" style="margin-top: 10px;" th:text="${result.snippet}"></p>
